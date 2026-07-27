@@ -24,7 +24,7 @@ fi
 
 if [[ -d "$scripts" ]]; then
 	printf "Installing user scripts...\n"
-	install -d "$bin"
+	install -d -m 0755 "$bin"
 
 	for script in "$scripts"/*; do
 		[[ -f "$script" ]] || continue
@@ -39,9 +39,8 @@ fi
 zsh_path="$(command -v zsh)"
 
 if [[ "${SHELL:-}" != "$zsh_path" ]]; then
-	printf "Setting Zsh as the default shell...\n"
-
 	if command -v chsh >/dev/null; then
+		printf "Setting Zsh as the default shell...\n"
 		chsh -s "$zsh_path"
 	else
 		printf "chsh is unavailable; set your shell manually:\n" >&2
@@ -49,8 +48,5 @@ if [[ "${SHELL:-}" != "$zsh_path" ]]; then
 	fi
 fi
 
-if [[ ":${PATH:-}:" != *":$bin:"* ]]; then
-	printf "Warning: %s is not currently in PATH\n" "$bin" >&2
-fi
-
 printf "Installed Zsh configuration and scripts.\n"
+printf "Open a new Zsh session to apply the configuration.\n"
