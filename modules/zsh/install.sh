@@ -5,7 +5,7 @@ set -euo pipefail
 directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 config="$directory/config"
 scripts="$directory/scripts"
-bin="${XDG_BIN_HOME:-$HOME/.local/bin}"
+bin="/usr/local/bin"
 
 if ! command -v zsh >/dev/null; then
 	if ! command -v xbps-install >/dev/null; then
@@ -23,13 +23,12 @@ if [[ -d "$config" ]]; then
 fi
 
 if [[ -d "$scripts" ]]; then
-	printf "Installing user scripts...\n"
-	install -d -m 0755 "$bin"
+	printf "Installing system scripts...\n"
 
 	for script in "$scripts"/*; do
 		[[ -f "$script" ]] || continue
 
-		install \
+		sudo install \
 			-m 0755 \
 			"$script" \
 			"$bin/$(basename "$script")"
@@ -48,5 +47,5 @@ if [[ "${SHELL:-}" != "$zsh_path" ]]; then
 	fi
 fi
 
-printf "Installed Zsh configuration and scripts.\n"
+printf "Installed Zsh configuration and system scripts.\n"
 printf "Open a new Zsh session to apply the configuration.\n"
