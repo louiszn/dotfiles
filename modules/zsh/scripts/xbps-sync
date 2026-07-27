@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ "$(id -u)" -ne 0 ]; then
+	echo "This script must be run as root." >&2
+	exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+	set -- -Su
+fi
+
+xbps-install "$@"
+
+sbctl-batch-sign
