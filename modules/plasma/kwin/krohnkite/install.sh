@@ -34,10 +34,18 @@ kwriteconfig6 \
 	--key krohnkiteEnabled \
 	true
 
-if qdbus6 org.kde.KWin /KWin reconfigure 2>/dev/null; then
-	printf "Krohnkite installed and enabled.\n"
-else
-	printf "%s\n" \
-		"Krohnkite installed and enabled." \
-		"Log out and back in to activate it."
-fi
+kwriteconfig6 \
+	--file kwinrc \
+	--group Plugins \
+	--key krohnkiteEnabled \
+	true
+
+kwriteconfig6 \
+	--file kwinrc \
+	--group Windows \
+	--key ElectricBorderTiling \
+	false
+
+printf "%s\n" \
+	"Krohnkite installed and enabled." \
+	"Log out and back in to activate it."
