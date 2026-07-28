@@ -15,6 +15,7 @@ readonly clear_shortcuts_label="Clear existing shortcuts"
 readonly wm_shortcuts_label="Window manager shortcuts"
 readonly shell_shortcuts_label="Plasma Shell shortcuts"
 readonly app_shortcuts_label="Application shortcuts"
+readonly power_shortcuts_label="Power shortcuts"
 
 if ! command -v gum >/dev/null; then
 	printf "gum is required to run the installer\n" >&2
@@ -96,6 +97,7 @@ if is_selected "$shortcuts_label" "$main_selection"; then
 		"$wm_shortcuts_label"
 		"$shell_shortcuts_label"
 		"$app_shortcuts_label"
+		"$power_shortcuts_label"
 	)
 
 	if ! shortcut_selection="$(
@@ -152,6 +154,12 @@ if is_selected "$app_shortcuts_label" "$shortcut_selection"; then
 	add_to_plan \
 		"Installing application shortcuts" \
 		"modules/plasma/shortcuts/set-apps.sh"
+fi
+
+if is_selected "$power_shortcuts_label" "$shortcut_selection"; then
+	add_to_plan \
+		"Installing power shortcuts" \
+		"modules/plasma/shortcuts/set-power.sh"
 fi
 
 if is_selected "$panel_label" "$main_selection"; then
