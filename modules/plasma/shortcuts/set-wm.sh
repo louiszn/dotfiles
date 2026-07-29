@@ -26,7 +26,7 @@ bind "kwin" "KrohnkiteShiftDown" "Meta+Shift+J" "Meta+Shift+Down"
 bind "kwin" "KrohnkiteShiftUp" "Meta+Shift+K" "Meta+Shift+Up"
 
 bind "kwin" "KrohnkiteShrinkWidth" "Meta+Ctrl+H" "Meta+Ctrl+Left"
-bind "kwin" "KrohnkiteGrowWidth" "Meta+Ctrl+L" "Meta+Ctrl+Right"
+bind "kwin" "KrohnkitegrowWidth" "Meta+Ctrl+L" "Meta+Ctrl+Right" # Krohnkite used KrohnkitegrowWidth, maybe a typo?
 bind "kwin" "KrohnkiteShrinkHeight" "Meta+Ctrl+J" "Meta+Ctrl+Down"
 bind "kwin" "KrohnkiteGrowHeight" "Meta+Ctrl+K" "Meta+Ctrl+Up"
 
