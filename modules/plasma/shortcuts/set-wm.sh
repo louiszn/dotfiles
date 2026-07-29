@@ -26,14 +26,14 @@ bind "kwin" "KrohnkiteShiftDown" "Meta+Shift+J"
 bind "kwin" "KrohnkiteShiftUp" "Meta+Shift+K"
 
 bind "kwin" "KrohnkiteShrinkWidth" "Meta+Ctrl+H"
-bind "kwin" "KrohnkitegrowWidth" "Meta+Ctrl+L"
+bind "kwin" "KrohnkiteGrowWidth" "Meta+Ctrl+L"
 bind "kwin" "KrohnkiteGrowHeight" "Meta+Ctrl+J"
 bind "kwin" "KrohnkiteShrinkHeight" "Meta+Ctrl+K"
 
 bind "kwin" "KrohnkiteToggleFloat" "Meta+F"
 bind "kwin" "KrohnkiteSetMaster" "Meta+Return"
 bind "kwin" "KrohnkiteNextLayout" 'Meta+\'
-bind "kwin" "KrohnkitePreviousLayout" "Meta+|" "Meta+ Shift+\"
+bind "kwin" "KrohnkitePreviousLayout" 'Meta+|' 'Meta+Shift+\'
 
 bind "kwin" "Overview" "Meta+W"
 bind "kwin" "Walk Through Windows" "Alt+Tab"
