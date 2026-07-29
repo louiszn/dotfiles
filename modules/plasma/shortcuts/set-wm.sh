@@ -32,8 +32,8 @@ bind "kwin" "KrohnkiteShrinkHeight" "Meta+Ctrl+K"
 
 bind "kwin" "KrohnkiteToggleFloat" "Meta+F"
 bind "kwin" "KrohnkiteSetMaster" "Meta+Return"
-bind "kwin" "KrohnkiteNextLayout" "Meta+Backslash"
-bind "kwin" "KrohnkitePreviousLayout" "Meta+Shift+Backslash"
+bind "kwin" "KrohnkiteNextLayout" 'Meta+\'
+bind "kwin" "KrohnkitePreviousLayout" "Meta+|" "Meta+ Shift+\"
 
 bind "kwin" "Overview" "Meta+W"
 bind "kwin" "Walk Through Windows" "Alt+Tab"
@@ -43,8 +43,12 @@ bind "kwin" "view_zoom_in" "Meta++" "Meta+="
 bind "kwin" "view_zoom_out" "Meta+-"
 bind "kwin" "view_actual_size" "Meta+Ctrl+0"
 
+shifted_keys=(')' '!' '@' '#' '$' '%' '^' '&' '*' '(')
+
 for workspace in {1..10}; do
 	key=$((workspace % 10))
+	shifted_key="${shifted_keys[$key]}"
+
 	bind "kwin" "Switch to Desktop $workspace" "Meta+$key"
-	bind "kwin" "Window to Desktop $workspace" "Meta+Shift+$key"
+	bind "kwin" "Window to Desktop $workspace" "Meta+Shift+$key" "Meta+$shifted_key"
 done
