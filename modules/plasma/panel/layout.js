@@ -21,7 +21,7 @@ const panelView = new ConfigFile(
 	`Panel ${panel.id}`
 );
 
-panelView.writeEntry("panelOpacity", 1);
+panelView.writeEntry("panelOpacity", 0);
 
 panel.addWidget("org.kde.plasma.kickoff");
 panel.addWidget("org.kde.plasma.appmenu");

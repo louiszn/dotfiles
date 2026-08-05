@@ -1,0 +1,57 @@
+title: Louis Dotfiles
+
+groups:
+  - title: Zsh
+    modules:
+      - title: Zsh configuration
+        script: modules/zsh/core/install.sh
+        default: true
+
+      - title: Zsh plugins
+        script: modules/zsh/plugins/install.sh
+        default: true
+
+      - title: sbctl batch signing
+        script: modules/zsh/sbctl/install.sh
+        default: false
+
+      - title: XBPS sync helper
+        script: modules/zsh/xbps-sync/install.sh
+        default: true
+        
+  - title: Plasma
+    modules: 
+      - title: Krohnkite Tiling Manager
+        script: modules/plasma/kwin/krohnkite/install.sh
+        default: true
+
+      - title: Geometry Change KWin effects
+        script: modules/plasma/kwin/geometry-change/install.sh
+        default: true
+
+      - title: Fusion panel - Top panel
+        script: modules/plasma/panel/install.sh
+        default: true
+
+      - title: Shortcuts
+        default: true
+        modules:
+          - title: Clear all shortcuts
+            script: modules/plasma/shortcuts/clear.sh
+            default: true
+
+          - title: Applications
+            script: modules/plasma/shortcuts/set-apps.sh
+            default: true
+
+          - title: Power management
+            script: modules/plasma/shortcuts/set-power.sh
+            default: true
+
+          - title: Shell management
+            script: modules/plasma/shortcuts/set-shell.sh
+            default: true
+
+          - title: Window management
+            script: modules/plasma/shortcuts/set-wm.sh
+            default: true

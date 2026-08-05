@@ -3,7 +3,9 @@
 set -euo pipefail
 
 directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+
 package="$directory/krohnkite.kwinscript"
+config="$directory/config.sh"
 installed="${XDG_DATA_HOME:-$HOME/.local/share}/kwin/scripts/krohnkite"
 
 if [[ ! -f "$package" ]]; then
@@ -18,11 +20,13 @@ fi
 
 if [[ -d "$installed" ]]; then
 	printf "Updating Krohnkite...\n"
+
 	kpackagetool6 \
 		--type KWin/Script \
 		--upgrade "$package"
 else
 	printf "Installing Krohnkite...\n"
+
 	kpackagetool6 \
 		--type KWin/Script \
 		--install "$package"
@@ -36,15 +40,15 @@ kwriteconfig6 \
 
 kwriteconfig6 \
 	--file kwinrc \
-	--group Plugins \
-	--key krohnkiteEnabled \
-	true
-
-kwriteconfig6 \
-	--file kwinrc \
 	--group Windows \
 	--key ElectricBorderTiling \
 	false
+
+
+if [[ -f "$config" ]]; then
+	printf "Applying Krohnkite configuration...\n"
+	bash "$config"
+fi
 
 printf "%s\n" \
 	"Krohnkite installed and enabled." \

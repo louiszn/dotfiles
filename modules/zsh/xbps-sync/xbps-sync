@@ -13,4 +13,6 @@ fi
 
 xbps-install "$@"
 
-sbctl-batch-sign
+if command -v sbctl-batch-sign >/dev/null; then
+	sbctl-batch-sign
+fi

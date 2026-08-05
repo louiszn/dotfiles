@@ -19,9 +19,16 @@ HISTSIZE=100000
 SAVEHIST=100000
 
 # Plugins
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+plugins_dir=/usr/share/zsh/plugins
+
+[[ -f "$plugins_dir/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && 
+	source "$plugins_dir/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+[[ -f "$plugins_dir/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] &&
+	source "$plugins_dir/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+[[ -f "$plugins_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
+	source "$plugins_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # Alias
 alias xsync="sudo xbps-sync"

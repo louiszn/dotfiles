@@ -1,0 +1,9 @@
+[tool.basedpyright]
+typeCheckingMode = "recommended"
+
+reportAny = false
+reportUnknownVariableType = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownLambdaType = false
+reportMissingTypeArgument = false
