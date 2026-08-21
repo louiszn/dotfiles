@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-package="$directory/geometry-change.zip"
-
 id="kwin4_effect_geometry_change"
+package="$MODULE_DIR/geometry-change.zip"
 installed="${XDG_DATA_HOME:-$HOME/.local/share}/kwin/effects/$id"
 
 if [[ ! -f "$package" ]]; then
 	printf "Package not found: %s\n" "$package" >&2
+	exit 1
+fi
+
+if ! command_exists kpackagetool6; then
+	printf "kpackagetool6 is required\n" >&2
 	exit 1
 fi
 

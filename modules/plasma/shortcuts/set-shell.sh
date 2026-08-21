@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-source "$(dirname "$0")/functions.sh"
+import_lib kwin_shortcuts
 
 bind "plasmashell" "activate application launcher" "Meta"
 

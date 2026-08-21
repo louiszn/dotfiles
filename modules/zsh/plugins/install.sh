@@ -1,17 +1,8 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+import_lib packages
 
-if ! command -v xbps-install >/dev/null; then
-	printf "xbps-install is unavailable.\n" >&2
-	exit 1
-fi
-
-printf "Installing Zsh plugins...\n"
-
-sudo xbps-install -y \
+install_packages \
 	zsh-autosuggestions \
 	zsh-history-substring-search \
 	zsh-syntax-highlighting
-
-printf "Zsh plugins installed.\n"

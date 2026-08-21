@@ -40,18 +40,18 @@ groups:
             script: modules/plasma/shortcuts/clear.sh
             default: true
 
-          - title: Applications
+          - title: Applications shortcuts
             script: modules/plasma/shortcuts/set-apps.sh
             default: true
 
-          - title: Power management
-            script: modules/plasma/shortcuts/set-power.sh
+          - title: Function keys
+            script: modules/plasma/shortcuts/set-functions.sh
             default: true
 
-          - title: Shell management
+          - title: Shell management shortcuts
             script: modules/plasma/shortcuts/set-shell.sh
             default: true
 
-          - title: Window management
+          - title: Window management shortcuts
             script: modules/plasma/shortcuts/set-wm.sh
             default: true

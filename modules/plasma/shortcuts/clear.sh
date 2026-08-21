@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 config="${XDG_CONFIG_HOME:-$HOME/.config}/kglobalshortcutsrc"
 backup_dir="${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles/shortcuts"
 timestamp="$(date +%Y%m%d-%H%M%S)"

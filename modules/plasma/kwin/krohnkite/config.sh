@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 set_config() {
 	kwriteconfig6 \
 		--file kwinrc \

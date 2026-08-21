@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-
-package="$directory/krohnkite.kwinscript"
-config="$directory/config.sh"
+package="$MODULE_DIR/krohnkite.kwinscript"
+config="$MODULE_DIR/config.sh"
 installed="${XDG_DATA_HOME:-$HOME/.local/share}/kwin/scripts/krohnkite"
 
 if [[ ! -f "$package" ]]; then
@@ -13,7 +9,7 @@ if [[ ! -f "$package" ]]; then
 	exit 1
 fi
 
-if ! command -v kpackagetool6 >/dev/null; then
+if ! command_exists kpackagetool6; then
 	printf "kpackagetool6 is required\n" >&2
 	exit 1
 fi
@@ -49,7 +45,3 @@ if [[ -f "$config" ]]; then
 	printf "Applying Krohnkite configuration...\n"
 	bash "$config"
 fi
-
-printf "%s\n" \
-	"Krohnkite installed and enabled." \
-	"Log out and back in to activate it."

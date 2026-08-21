@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-layout="$directory/layout.js"
+layout="$MODULE_DIR/layout.js"
 
 if [[ ! -f "$layout" ]]; then
 	printf "Panel layout not found: %s\n" "$layout" >&2

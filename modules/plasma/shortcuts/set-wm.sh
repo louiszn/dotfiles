@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-source "$(dirname "$0")/functions.sh"
+import_lib kwin_shortcuts
 
 bind "kwin" "Window Close" "Meta+Shift+Q" "Alt+F4"
 bind "kwin" "Window Operations Menu" "Alt+F3"

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -14,10 +15,10 @@ class Module(BaseModel):
     title: str
     default: bool = False
     script: Path | None = None
-    modules: list["Module"] | None = None
+    modules: list[Module] | None = None
 
     @model_validator(mode="after")
-    def _check_leaf_or_branch(self) -> "Module":
+    def _check_leaf_or_branch(self) -> Module:
         has_script = self.script is not None
         has_children = self.modules is not None
         if has_script == has_children:
@@ -41,16 +42,18 @@ class Config(BaseModel):
     groups: list[Group]
 
 
-STYLE = Style([
-    ("qmark", ""),
-    ("question", "bold"),
-    ("answer", ""),
-    ("pointer", "fg:#3DAEE9 bold"),
-    ("highlighted", "fg:#7DD3FC noreverse"),
-    ("selected", "fg:#2678A8 noreverse"),
-    ("checkbox", "fg:#3DAEE9"),
-    ("checkbox-selected", "fg:#2678A8 noreverse"),
-])
+STYLE = Style(
+    [
+        ("qmark", ""),
+        ("question", "bold"),
+        ("answer", ""),
+        ("pointer", "fg:#3DAEE9 bold"),
+        ("highlighted", "fg:#7DD3FC noreverse"),
+        ("selected", "fg:#2678A8 noreverse"),
+        ("checkbox", "fg:#3DAEE9"),
+        ("checkbox-selected", "fg:#2678A8 noreverse"),
+    ]
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT / "installer" / "config.yaml"
@@ -107,14 +110,10 @@ def choose_modules(config: Config) -> list[Module]:
 
 def confirm_installation(modules: list[Module]) -> bool:
     """Show the installation plan and ask for confirmation."""
-    console.print()
     console.print("[bold]Installation plan[/]")
-    console.print()
 
     for module in modules:
         console.print(f"[cyan]✓[/] {module.title}")
-
-    console.print()
 
     return bool(confirm("Continue?", default=True, style=STYLE).ask())
 
@@ -124,7 +123,7 @@ def run(modules: list[Module]) -> None:
     total = len(modules)
 
     for index, module in enumerate(modules, start=1):
-        console.rule(f"[{index}/{total}] {module.title}")
+        console.print(f"[bold cyan][{index:02}/{total:02}] {module.title}[/]")
 
         script = module.script
         assert script is not None  # only leaf modules ever reach here
@@ -135,19 +134,46 @@ def run(modules: list[Module]) -> None:
             raise SystemExit(1)
 
         try:
-            subprocess.run(["bash", str(script_path)], cwd=ROOT, check=True)
-        except subprocess.CalledProcessError as exc:
-            console.print(
-                f"[red]✗ {module.title} failed (exit code {exc.returncode}).[/]"
+            env = {
+                **os.environ,
+                "ROOT": str(ROOT),
+                "BASH_ENV": str(ROOT / "modules/lib/common.sh"),
+                "MODULE_DIR": str(script_path.parent)
+            }
+
+            process = subprocess.Popen(
+                ["bash", str(script_path)],
+                cwd=ROOT,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                env=env,
+                bufsize=1,
             )
-            raise SystemExit(exc.returncode) from exc
+
+            assert process.stdout is not None
+
+            for line in process.stdout:
+                line = line.rstrip()
+                if line:
+                    console.print(f"[dim]   info: {line}[/]")
+
+            returncode = process.wait()
+
+            if returncode == 0:
+                console.print("[green]   done: Applied successfully")
+            else:
+                console.print(f"[red]    error: failed with code {returncode}.[/]")
+                raise SystemExit(returncode)
+
+        except OSError as exc:
+            console.print(f"[red]✗ Failed to start {module.title}: {exc}[/]")
+            raise SystemExit(1) from exc
 
 
 def main() -> None:
     config = load_config()
-
     console.print(f"[bold cyan]{config.title}[/]")
-    console.print()
 
     modules = choose_modules(config)
 
@@ -159,7 +185,6 @@ def main() -> None:
         console.print("[yellow]Installation cancelled.[/]")
         return
 
-    console.print()
     run(modules)
 
     console.print()
@@ -172,4 +197,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         console.print("\n[yellow]Interrupted.[/]")
         sys.exit(130)
-        

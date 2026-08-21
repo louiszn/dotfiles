@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+import_lib packages
 
-directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-
-printf "Installing Zsh...\n"
-
-sudo xbps-install -y zsh
+install_packages zsh
 
 printf "Installing .zshrc...\n"
 
 install \
 	-m 0644 \
-	"$directory/.zshrc" \
+	"$MODULE_DIR/.zshrc" \
 	"$HOME/.zshrc"
 
 zsh_path="$(command -v zsh)"
@@ -21,5 +17,3 @@ if [[ "${SHELL:-}" != "$zsh_path" ]]; then
 	printf "Setting Zsh as default shell...\n"
 	chsh -s "$zsh_path"
 fi
-
-printf "Zsh core installed.\n"
