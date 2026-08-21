@@ -141,31 +141,20 @@ def run(modules: list[Module]) -> None:
                 "MODULE_DIR": str(script_path.parent)
             }
 
-            process = subprocess.Popen(
+            process = subprocess.run(
                 ["bash", str(script_path)],
                 cwd=ROOT,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
                 env=env,
-                bufsize=1,
+                check=False,
             )
 
-            assert process.stdout is not None
-
-            for line in process.stdout:
-                line = line.rstrip()
-                if line:
-                    console.print(f"[dim]   info: {line}[/]")
-
-            returncode = process.wait()
+            returncode = process.returncode
 
             if returncode == 0:
-                console.print("[green]   done: Applied successfully")
+                console.print("[green]done: Applied successfully")
             else:
-                console.print(f"[red]    error: failed with code {returncode}.[/]")
+                console.print(f"[red]error: failed with code {returncode}.[/]")
                 raise SystemExit(returncode)
-
         except OSError as exc:
             console.print(f"[red]✗ Failed to start {module.title}: {exc}[/]")
             raise SystemExit(1) from exc
