@@ -2,10 +2,7 @@
 
 import_lib packages
 
-if ! package_exists sbctl; then
-	printf "sbctl is not installed.\n" >&2
-	exit 1
-fi
+install_packages sbctl
 
 sudo install \
 	-m 0755 \

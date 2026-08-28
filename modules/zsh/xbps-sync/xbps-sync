@@ -12,7 +12,3 @@ if [ "$#" -eq 0 ]; then
 fi
 
 xbps-install "$@"
-
-if command -v sbctl-batch-sign >/dev/null; then
-	sbctl-batch-sign
-fi

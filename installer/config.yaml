@@ -11,10 +11,6 @@ groups:
         script: modules/zsh/plugins/install.sh
         default: true
 
-      - title: sbctl batch signing
-        script: modules/zsh/sbctl/install.sh
-        default: false
-
       - title: XBPS sync helper
         script: modules/zsh/xbps-sync/install.sh
         default: true
@@ -54,4 +50,21 @@ groups:
 
           - title: Window management shortcuts
             script: modules/plasma/shortcuts/set-wm.sh
+            default: true
+      
+  - title: Secure boot and encryption utilities
+    modules:
+      - title: Sbctl batch signing
+        script: modules/secure-boot-encrypt/sbctl/install.sh
+        default: false
+
+      - title: UKI gen
+        default: false
+        modules:
+          - title: Add ukigen helper script
+            script: modules/secure-boot-encrypt/ukigen/install.sh
+            default: true
+
+          - title: Replace default 20-initramfs with 20-ukigen
+            script: modules/secure-boot-encrypt/ukigen/hook/install.sh
             default: true

@@ -1,0 +1,15 @@
+#!/bin/sh
+set -eu
+
+VERSION="${1:?usage: ukigen <kernel-version> [output]}"
+OUTPUT="/boot/efi/EFI/Void/void-uki.efi"
+
+rm -f "/boot/initramfs-$VERSION.img"
+
+/usr/bin/dracut \
+    --force \
+    --uefi \
+    "$OUTPUT" \
+    "$VERSION"
+
+/usr/local/bin/sbctl-batch-sign
